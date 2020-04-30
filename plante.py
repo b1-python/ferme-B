@@ -20,12 +20,23 @@ class modele:
 class Legume:
 
     def __init__(self, nom, ps, pv, proba ):
+        """
+        Constructeur de la classe
+
+        :param nom: nom de la plante
+        :param ps: prix d'achat de la semence
+        :param pv: prix de vente de la semence
+        :param proba: probabilité entre 0 et 100 que la plante arrive à maturités
+        """
         self.nom = nom
         self.prix_semence = ps
         self.prix_vente = pv
         self.probabilite = proba
 
     def getNom(self):
+        """
+        :return: Renvoie le nom de la plante
+        """
         return self.nom
 
     def getPrixAchat(self):
