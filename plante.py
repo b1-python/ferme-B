@@ -50,6 +50,17 @@ class Legume:
             return 0
 
 
+class Fleur(Legume):
+    """ Une fleur est comme un légume, mais avec une couleur en plus"""
+
+    def __init__(self, nom, ps, pv, proba, couleur):
+        Legume.__init__(self, nom, ps, pv, proba)
+        self.couleur = couleur
+
+    def getCouleur(self):
+        return self.couleur
+
+
 def creerPlante(nom):
     """ Renvoie le légume demandé """
     if nom == "courgette":
@@ -58,6 +69,12 @@ def creerPlante(nom):
         return Legume("tomate", 0.4, 3, 50)
     elif nom == "patate":
         return Legume("patate", 0.9, 1.5, 90)
+    elif nom == "tulipe":
+        return Fleur("tulipe", 2, 4, 80, "rose")
+    elif nom == "rose":
+        return Fleur("rose", 3, 7, 50, "rouge")
+    elif nom == "muguet":
+        return Fleur("muguet", 1, 2, 90, "blanc")
     else:
         raise ValueError()
 

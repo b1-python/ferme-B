@@ -1,4 +1,5 @@
 import plante
+import random
 
 courgette = plante.creerPlante("courgette")
 poireau = plante.Legume("poireau", 1, 3, 60)
@@ -6,9 +7,13 @@ poireau = plante.Legume("poireau", 1, 3, 60)
 print("Prix de vente de la courgette: " + str(courgette.vendre()))
 print("Prix de vente du poireau: " + str(poireau.vendre()))
 
+# On déclare les couleurs comme variables globales car ce sont des constantes
+TOUTE_LES_COULEURS = ['rouge', 'vert', 'bleu', 'jaune', 'orange', 'rose', 'violet', 'blanc', 'noir']
+
 class JeuDeFerme:
 
     def __init__(self):
+        self.couleurDeLaSaison = 'to be defined' # Déclarée ici pour que tous les attributs soient définis dans le constructeur. La valeur sera positionnée correctement au début de la première saison
         self.debutsaison = True
         self.annee = 0
         self.anneeMax = 1000
@@ -17,7 +22,7 @@ class JeuDeFerme:
 
     def acheterSemence(self):
         """ Fonction qui gère les interactions avec l'utilisateur pour l'achat des semences """
-        nom = input("Graine de quel légume?")
+        nom = input("Graine de quel légume? ")
         legume = plante.creerPlante(nom)
         prixachat = legume.getPrixAchat()
         if prixachat > self.argentjoueur:
@@ -28,7 +33,17 @@ class JeuDeFerme:
 
     def vendreSemences(self):
         """ Vends toutes les semences achetée au début de la saison """
-        
+        for legume in self.legumes:
+            prixDeVente = legume.vendre()
+            print(legume.getNom() + " vendu " + str(prixDeVente) + "€")
+            self.argentjoueur += prixDeVente
+        self.legumes = []
+
+    def commencerSaison(self):
+        self.annee += 1
+        self.debutsaison = True
+        self.couleurDeLaSaison = random.choice(TOUTE_LES_COULEURS)
+
 
     def main(self):
         # 1ère boucle sur les saisons : chaque itération correspond à une saison en deux étapes, achats puis vente
@@ -37,7 +52,7 @@ class JeuDeFerme:
             ## Début de saison, on achète des plantes
             if self.debutsaison:
                 # Demander si on veut acheter des semences ou finir la saison
-                choix = input("Vous avez" + str(self.argentjoueur) + "€. Que voulez vous faire ? S = acheter une semence, Q = finir la saison")
+                choix = input("Vous avez " + str(self.argentjoueur) + "€. Que voulez vous faire ? S = acheter une semence, Q = finir la saison : ")
 
                 if choix == "S":
                     self.acheterSemence()
@@ -51,10 +66,8 @@ class JeuDeFerme:
 
             else:
                 # Fin de saison => Vente des semences
-                pass
-
-            ## Fin de saison, on vend nos plantes
-            pass
+                self.vendreSemences()
+                self.commencerSaison()
 
 
 
