@@ -35,6 +35,14 @@ class JeuDeFerme:
         """ Vends toutes les semences achetée au début de la saison """
         for legume in self.legumes:
             prixDeVente = legume.vendre()
+
+            # Vérification de la saison pour les fleurs
+            if isinstance(legume, plante.Fleur):
+                # Ici, on sait qu'on manipule une Fleur
+                if legume.getCouleur() == self.couleurDeLaSaison:
+                    print("Youpi, la " + legume.getNom() + " est a la mode cette année !")
+                    prixDeVente *= 2
+
             print(legume.getNom() + " vendu " + str(prixDeVente) + "€")
             self.argentjoueur += prixDeVente
         self.legumes = []
@@ -59,6 +67,7 @@ class JeuDeFerme:
 
                 elif choix == "Q":
                     # Finir la saison
+                    print("La couleur cette saison est le "+self.couleurDeLaSaison)
                     self.debutsaison = False
 
                 else:
